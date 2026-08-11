@@ -1,0 +1,10 @@
+services:
+  - type: web
+    runtime: static
+    name: t2-programacao-web-frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      # URL base do backend publicado (sem barra no final).
+      - key: VITE_API_URL
+        value: https://t2-programacao-web-backend.onrender.com

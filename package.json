@@ -1,0 +1,22 @@
+{
+  "name": "t2-programacao-web-frontend",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true
+  },
+  "dependencies": {
+    "bootstrap-icons": "^1.13.1"
+  }
+}

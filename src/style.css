@@ -1,0 +1,433 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #1f2937;
+}
+
+/* Botão "Adicionar Tarefa": centralizado no topo da página. */
+.add-task-bar {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* Barra superior com o título do quadro, centralizado. */
+.topbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  background-color: #f3f4f63e;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.topbar-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Botão "Adicionar Tarefa" — azul escuro. */
+.btn-add {
+  background-color: #2c5ee8;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-add:hover {
+  background-color: #1e40af;
+}
+
+/* Botões desabilitados: aparência apagada e sem destaque ao passar o mouse. */
+.btn-add:disabled,
+.task-action:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.btn-add:disabled:hover,
+.task-action:disabled:hover {
+  background-color: #9ca3af;
+}
+
+/* Mensagem de "nenhuma tarefa" — caixa vermelha centralizada. */
+.empty-message {
+  max-width: 420px;
+  margin: 48px auto 0;
+  padding: 20px 24px;
+  background-color: #e77b7b;
+  color: #ffffff;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+/* Variante azul, usada para mensagens informativas (ex.: carregando). */
+.empty-message--info {
+  background-color: #5b8def;
+}
+
+/* ---- Quadro Kanban ---- */
+
+/* Colunas lado a lado, horizontalmente. */
+.board {
+  display: flex;
+  gap: 16px;
+  align-items: stretch; /* todas as colunas com a mesma altura */
+  padding: 16px;
+  overflow-x: auto;
+}
+
+/* Cada coluna: fundo acinzentado para destacar do fundo da página. */
+.column {
+  flex: 1 1 0;
+  min-width: 200px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.column-title {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* As cores afetam APENAS o texto do status. */
+.column-title[data-status="A_FAZER"] {
+  color: #dc2626; /* vermelho */
+}
+
+.column-title[data-status="EM_PROGRESSO"] {
+  color: #ea580c; /* laranja */
+}
+
+.column-title[data-status="PRONTO"] {
+  color: #ca8a04; /* amarelo */
+}
+
+.column-title[data-status="ENTREGUE"] {
+  color: #16a34a; /* verde */
+}
+
+/* ---- Itens de tarefa ---- */
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Card da tarefa: nome à esquerda, ações à direita. */
+.task-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.task-name {
+  font-weight: 500;
+}
+
+/* Ações no canto direito do card, lado a lado horizontalmente. */
+.task-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}
+
+/* Mesma cor do botão "Adicionar Tarefa". */
+.task-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2c5ee8;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.task-action:hover {
+  background-color: #1e40af;
+}
+
+/* ---- Modal de criação de tarefa ---- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.modal {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  /* Não passa da altura da tela; rola internamente quando o conteúdo excede. */
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.form-field textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+/* Campo de checkbox: controle ao lado do rótulo, em vez de empilhado. */
+.form-field-checkbox {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.form-field-checkbox input {
+  width: auto;
+  margin: 0;
+}
+
+.form-field-checkbox .form-hint {
+  flex-basis: 100%;
+}
+
+.form-hint {
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.form-error {
+  margin: 0;
+  color: #b91c1c;
+  font-size: 0.9rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.btn-secondary {
+  background-color: #e5e7eb;
+  color: #1f2937;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background-color: #dc2626;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background-color: #b91c1c;
+}
+
+/* ---- Autenticação, perfil e topo logado ---- */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background-color: #f3f4f6;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.auth-card h1,
+.auth-card h2,
+.auth-card h3 {
+  margin-top: 0;
+}
+
+.auth-subtitle {
+  margin-top: -8px;
+  margin-bottom: 20px;
+  color: #6b7280;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.auth-field input,
+.auth-field select {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.auth-submit {
+  width: 100%;
+}
+
+.auth-links {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #2c5ee8;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+}
+
+.link-button:hover {
+  color: #1e40af;
+}
+
+.success-message {
+  margin: 0;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #dcfce7;
+  color: #166534;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.topbar {
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-user {
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.btn-small {
+  padding: 7px 10px;
+  font-size: 0.85rem;
+}
+
+.profile-page {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.profile-card {
+  max-width: 560px;
+}
+
+.profile-card h2,
+.profile-card h3 {
+  text-align: center;
+}
+
+.profile-card h3 {
+  margin-top: 32px;
+}
+
+/* ---- Cards mais completos ---- */
+
+.task-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.task-meta {
+  color: #6b7280;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.task-card {
+  align-items: flex-start;
+}

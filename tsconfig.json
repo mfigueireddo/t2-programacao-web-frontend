@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    /* Ambiente / saída — alinhado ao Vite (transpila por módulo). */
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "useDefineForClassFields": true,
+
+    /* Sem emissão: o Vite cuida do bundle; o tsc só verifica os tipos. */
+    "noEmit": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+
+    /* Rigor máximo — queremos o TypeScript trabalhando ao máximo a nosso favor. */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"]
+}
