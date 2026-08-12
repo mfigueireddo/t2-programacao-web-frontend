@@ -1,8 +1,16 @@
-# Quadro Kanban — Frontend
+# [T2] Quadro Kanban - Programação para Web
 
-Frontend do sistema **Quadro Kanban**, desenvolvido para a disciplina de Programação Web.
+---
 
-O backend do projeto está disponível [aqui](https://github.com/mfigueireddo/t2-programacao-web-backend).
+### Contexto
+
+Sistema de quadro Kanban para gestão de tarefas em equipe. 
+
+A aplicação oferece cadastro e autenticação de usuários, recuperação de senha e o gerenciamento de tarefas distribuídas por status, com dois níveis de permissão: mantenedores administram todas as tarefas, enquanto usuários comuns atuam sobre aquelas pelas quais são responsáveis. 
+
+A [primeira versão](https://github.com/mfigueireddo/t1-programacao-web) (T1), foi construída como uma aplicação Django, com todas as páginas renderizadas no servidor a partir de HTML e CSS e sem JavaScript — cada ação do usuário corresponde a um formulário e a um novo carregamento de página. 
+
+Esta é a segunda versão (T2), onde o mesmo sistema foi reconstruído baseado numa API REST e um cliente em TypeScript que vivem em repositórios separados: [backend](https://github.com/mfigueireddo/t2-programacao-web-backend) e [frontend](https://github.com/mfigueireddo/t2-programacao-web-frontend).
 
 ---
 
